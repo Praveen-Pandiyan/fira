@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "777493142550",
+    "project_id": "fira-001",
+    "storage_bucket": "fira-001.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777493142550:android:a9cc821ee2539bad95e937",
+        "android_client_info": {
+          "package_name": "com.example.fira"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdXA-Mm75u4t_w40PYFXRzTyKpaTUJBrg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
