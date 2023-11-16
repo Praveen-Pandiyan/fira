@@ -1,12 +1,21 @@
+import 'package:fira/bloc/auth/auth_bloc.dart';
+import 'package:fira/firebase_options.dart';
+import 'package:fira/services/auth_services.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  MyApp({super.key});
+  final _authService = FiraAuthService();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,45 +23,46 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MultiBlocProvider(
+          providers: [
+            BlocProvider<AuthenticationBloc>(
+              create: (BuildContext context) => AuthenticationBloc(_authService),
+            ),
+          ],
+          child:const MyHomePage(title: 'Flutter Demo Home Page'),
+        )
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key, required this.title});
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+    return BlocBuilder<AuthenticationBloc, AuthState>(
+      builder: (context, state) {
+        if (state == AuthState.loggedIn) {
+          return Scaffold(
+            body: Container(
+              child: Text("loggedin"),
             ),
-            Text(
-              'Fira',
-              style: Theme.of(context).textTheme.headline4,
+          );
+        } else {
+          return Scaffold(
+            body: Center(
+
+              child: InkWell(
+                onTap: () {
+                  AuthenticationBloc
+                },
+                child: Text("loggedout")),
             ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: ()=>{},
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), 
+          );
+        }
+        ;
+      },
     );
   }
 }
