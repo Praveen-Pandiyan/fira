@@ -1,27 +1,31 @@
 
 import 'package:fira/services/auth_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthenticationBloc extends Bloc<AuthEvent, AuthState> {
   final FiraAuthService  _authService;
 
-  AuthenticationBloc(this._authenticationRepository) : super(AuthenticationInitial()) {
+   AuthenticationBloc(this._authService) : super(AuthState.loggedOut)   {
 
     on<AuthEvent>((event, emit) async {
-      if (event is AuthenticationStarted){
-        User? user = await _authService.retrieveCurrentUser().first;
+      if (event == AuthEvent.login){
+        UserCredential? user = await _authService.signInWithGoogle();
         if( user!= null){
-          String?  displayName = await _authService.retrieveUserName(user);
-          emit(AuthenticationSuccess(displayName: displayName));
+          debugPrint("logged in as : ${user.user!.displayName}");
+          emit(AuthState.loggedIn);
         }else{
-          emit(AuthenticationFailure());
+          emit(AuthState.loggedOut);
         }
-      }else if(event is AuthenticationSignedOut){
+      }else if(event == AuthEvent.logout){
         await _authService.signOut();
-        emit(AuthenticationFailure());
+        emit(AuthState.loggedOut);
       }
     });
   }
 
 }
+
+enum AuthState{loggedIn, loggedOut}
+enum AuthEvent{login,logout,idle}
