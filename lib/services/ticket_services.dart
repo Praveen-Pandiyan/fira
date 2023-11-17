@@ -20,4 +20,11 @@ class TicketsServices {
           .toList();
     });
   }
+   Stream<List<Tickets>> getUserTicket(String uid) {
+    return ticketCollection.where('uid',isEqualTo: uid).snapshots().map((snapshot) {
+      return snapshot.docs
+          .map((doc) => Tickets.fromFirebase(doc))
+          .toList();
+    });
+  }
 }

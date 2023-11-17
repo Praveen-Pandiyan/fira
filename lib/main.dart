@@ -1,6 +1,8 @@
 import 'package:fira/bloc/auth/auth_bloc.dart';
 import 'package:fira/firebase_options.dart';
 import 'package:fira/services/auth_services.dart';
+import 'package:fira/widgets/home_page/home_page.dart';
+import 'package:fira/widgets/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,29 +46,10 @@ class MyHomePage extends StatelessWidget {
     return BlocBuilder<AuthenticationBloc, AuthState>(
       builder: (context, state) {
         if (state == AuthState.loggedIn) {
-          return Scaffold(
-            body: InkWell(
-              onTap: (){
-                context.read<AuthenticationBloc>().add(AuthEvent.logout);
-              },
-              child: Center(
-                child: Text("loggedin"),
-              ),
-            ),
-          );
+          return const HomePage();
         } else {
-          return Scaffold(
-            body: Center(
-
-              child: InkWell(
-                onTap: () {
-                  context.read<AuthenticationBloc>().add(AuthEvent.login);
-                },
-                child: Text("loggedout")),
-            ),
-          );
+          return const SplashScreen();
         }
-        ;
       },
     );
   }
