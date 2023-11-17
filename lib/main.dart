@@ -45,8 +45,13 @@ class MyHomePage extends StatelessWidget {
       builder: (context, state) {
         if (state == AuthState.loggedIn) {
           return Scaffold(
-            body: Container(
-              child: Text("loggedin"),
+            body: InkWell(
+              onTap: (){
+                context.read<AuthenticationBloc>().add(AuthEvent.logout);
+              },
+              child: Center(
+                child: Text("loggedin"),
+              ),
             ),
           );
         } else {
@@ -55,7 +60,7 @@ class MyHomePage extends StatelessWidget {
 
               child: InkWell(
                 onTap: () {
-                  AuthenticationBloc
+                  context.read<AuthenticationBloc>().add(AuthEvent.login);
                 },
                 child: Text("loggedout")),
             ),

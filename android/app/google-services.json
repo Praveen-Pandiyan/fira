@@ -12,7 +12,20 @@
           "package_name": "com.example.fira"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "777493142550-drbqtj19tt0t8bhv4io104h7b73ttcu3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fira",
+            "certificate_hash": "d43a46e9174249ffe7974ad80a062758ef920a74"
+          }
+        },
+        {
+          "client_id": "777493142550-uiiqn8ep809r4iokmc9p3kgief4onc7l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBdXA-Mm75u4t_w40PYFXRzTyKpaTUJBrg"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "777493142550-uiiqn8ep809r4iokmc9p3kgief4onc7l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "777493142550-egen9kf09vmj96t4r3q58j1q48ag3cgl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fira"
+              }
+            }
+          ]
         }
       }
     }
