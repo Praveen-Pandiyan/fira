@@ -23,6 +23,7 @@ class TicketsServices {
       ticket.attachments = imageUrls;
     }
     ticket.ownerId = (await FiraAuthService().currentUser())!.uid;
+    ticket.ownerName = (await FiraAuthService().currentUser())!.displayName;
 
     await ticketCollection.doc(docId).set(ticket.toDoc());
   }

@@ -14,7 +14,6 @@ class TicketListBloc extends Bloc<TicketRepoEvent, TicketListState> {
           return TicketListLoaded(data);
         });
       } else if (TicketRepoEvent.user == event) {
-      
         String uid = (await FiraAuthService().currentUser())!.uid;
         emit.forEach(_ticketService.getUser(uid), onData: (data){
           return TicketListLoaded(data);
