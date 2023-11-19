@@ -23,8 +23,9 @@ class Tickets {
       this.ownerName,
       this.dateTime});
 
-  static Tickets fromFirebase(DocumentSnapshot<Map<String, dynamic>> doc) =>
-      Tickets(
+  static Tickets fromFirebase(DocumentSnapshot<Map<String, dynamic>> doc) {
+    print(doc.data().toString());
+      return Tickets(
           id: doc.id,
           title: doc.data()!['title'],
           disctiption: doc.data()!['discription'],
@@ -32,7 +33,7 @@ class Tickets {
           ownerId: doc.data()!['ownerId'],
           ownerName: doc.data()!['ownerName'],
           location: doc.data()!['location'],
-          dateTime: doc.data()!['date'].toString());
+          dateTime: doc.data()!['date'].toString());}
 
   Map<String, dynamic> toDoc() {
     return {

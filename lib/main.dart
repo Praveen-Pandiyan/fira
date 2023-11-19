@@ -5,14 +5,21 @@ import 'package:fira/services/auth_services.dart';
 import 'package:fira/services/ticket_services.dart';
 import 'package:fira/widgets/home_page/home_page.dart';
 import 'package:fira/widgets/splash_screen.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<void> main() async {
-   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
+  );
+  var firebaseAppCheck = FirebaseAppCheck.instance;
+  firebaseAppCheck.activate(
+    webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
+    androidProvider: AndroidProvider.playIntegrity,
+
   );
   runApp(MyApp());
 }
@@ -24,23 +31,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MultiBlocProvider(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: MultiBlocProvider(
           providers: [
             BlocProvider<AuthenticationBloc>(
-              create: (BuildContext context) => AuthenticationBloc(_authService),
+              create: (BuildContext context) =>
+                  AuthenticationBloc(_authService),
             ),
             BlocProvider<TicketListBloc>(
               create: (BuildContext context) => TicketListBloc(_ticketService),
             ),
           ],
-          child:const MyHomePage(title: 'Flutter Demo Home Page'),
-        )
-    );
+          child: const MyHomePage(title: 'Flutter Demo Home Page'),
+        ));
   }
 }
 

@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   TextButton(
                       onPressed: () {
-                        print("frf");
+                        
                         context
                             .read<TicketListBloc>()
                             .add(TicketRepoEvent.user);
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                       child: const Text("My Fira(s)")),
                   TextButton(
                       onPressed: () {
-                        print("frf");
+                        
                         context.read<TicketListBloc>().add(TicketRepoEvent.all);
                       },
                       child: const Text("All")),

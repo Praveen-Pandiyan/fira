@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fira/bloc/tickets/tickets_bloc.dart';
 import 'package:fira/services/auth_services.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import '../models/tickets_model.dart';
