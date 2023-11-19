@@ -20,11 +20,13 @@ class _SplashScreenState extends State<SplashScreen> {
           const Expanded(
             flex: 3,
             child: Center(
-              child: Text("Fira",style: TextStyle(
-                color: Colors.orange,
-                fontSize: 45,
-                fontWeight: FontWeight.bold
-              ),),
+              child: Text(
+                "Fira",
+                style: TextStyle(
+                    color: Colors.orange,
+                    fontSize: 45,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
           ),
           Expanded(
@@ -40,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         backgroundColor: MaterialStateProperty.resolveWith(
                           ((states) {
                             if (states.contains(MaterialState.pressed)) {
-                              return Color.fromARGB(255, 26, 117, 192);
+                              return const Color.fromARGB(255, 26, 117, 192);
                             }
                             return Colors.blue;
                           }),

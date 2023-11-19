@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fira/services/auth_services.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import '../models/tickets_model.dart';
 import 'dart:async';
@@ -19,6 +20,7 @@ class TicketsServices {
         });
       });
       ticket.attachments = imageUrls;
+      ticket.ownerId=(await FiraAuthService().retrieveCurrentUser().first)?.displayName??"";
     }
    await ticketCollection.doc(docId).set(ticket.toDoc());
   }

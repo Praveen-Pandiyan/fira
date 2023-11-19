@@ -104,7 +104,7 @@ class _AddFiraFormState extends State<AddFiraForm> {
                                 );
                                 if (result != null) {
                                   setState(() {
-                                    attachments!.addAll(result.paths
+                                    attachments.addAll(result.paths
                                         .map((path) => File(path!))
                                         .toList());
                                   });
@@ -150,6 +150,7 @@ class _AddFiraFormState extends State<AddFiraForm> {
                       attachmentFiles: attachments,
                       location: location,
                     ));
+                    Navigator.pop(context);
                   }
                 },
                 child: const Text('Submit'),
