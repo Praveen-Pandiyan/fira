@@ -1,19 +1,23 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Tickets {
   final String? id;
   final String title;
   final String disctiption;
-  final List<String> attachments;
+  final List<File> attachmentFiles;
+   List<String> attachments;
   final String location;
-  final num dateTime;
+  final num? dateTime;
   Tickets(
       {this.id,
       required this.title,
       required this.disctiption,
-      required this.attachments,
+      this.attachmentFiles=const [],
+       this.attachments =const [],
       required this.location,
-      required this.dateTime});
+       this.dateTime});
 
   static Tickets fromFirebase(DocumentSnapshot<Map<String, dynamic>> doc) =>
       Tickets(
@@ -30,7 +34,7 @@ class Tickets {
       "discription": disctiption,
       "attachments": attachments,
       "location": location,
-      "date": dateTime
+      "date": DateTime.now().millisecondsSinceEpoch
     };
   }
 }
