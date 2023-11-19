@@ -8,7 +8,7 @@ class Tickets {
   final String disctiption;
   final List<File> attachmentFiles;
   List<String> attachments;
-  String ownerId;
+  String? ownerId;
   final String location;
   final num? dateTime;
 
@@ -19,7 +19,7 @@ class Tickets {
       this.attachmentFiles=const [],
       this.attachments =const [],
       required this.location,
-      this.ownerId="",
+      this.ownerId,
       this.dateTime});
 
   static Tickets fromFirebase(DocumentSnapshot<Map<String, dynamic>> doc) =>
@@ -27,7 +27,7 @@ class Tickets {
           id: doc.id,
           title: doc.data()!['title'],
           disctiption: doc.data()!['discription'],
-          attachments: doc.data()!['attachments'],
+          // attachments: doc.data()!['attachments'].cast<String>() ,
           ownerId: doc.data()!['ownerId'],
           location: doc.data()!['location'],
           dateTime: doc.data()!['date']);

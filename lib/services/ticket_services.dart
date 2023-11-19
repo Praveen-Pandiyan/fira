@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fira/bloc/tickets/tickets_bloc.dart';
 import 'package:fira/services/auth_services.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import '../models/tickets_model.dart';
@@ -20,17 +21,27 @@ class TicketsServices {
         });
       });
       ticket.attachments = imageUrls;
-      ticket.ownerId=(await FiraAuthService().retrieveCurrentUser().first)?.displayName??"";
     }
-   await ticketCollection.doc(docId).set(ticket.toDoc());
+    ticket.ownerId = (await FiraAuthService().currentUser())!.uid;
+
+    await ticketCollection.doc(docId).set(ticket.toDoc());
   }
 
   Future<void> delete(Tickets ticket) async {
     return ticketCollection.doc(ticket.id).delete();
   }
 
-  Stream<List<Tickets>> getAll() {
-    return ticketCollection.snapshots().map((snapshot) {
+  Stream<List<Tickets>> getAll() async* {
+    yield* ticketCollection.snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) => Tickets.fromFirebase(doc)).toList();
+    });
+  }
+
+  Stream<List<Tickets>> getUser(String id) async* {
+    yield* ticketCollection
+        .where("ownerId", isEqualTo: id)
+        .snapshots()
+        .map((snapshot) {
       return snapshot.docs.map((doc) => Tickets.fromFirebase(doc)).toList();
     });
   }

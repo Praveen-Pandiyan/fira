@@ -1,6 +1,8 @@
 import 'package:fira/bloc/auth/auth_bloc.dart';
+import 'package:fira/bloc/tickets/tickets_bloc.dart';
 import 'package:fira/firebase_options.dart';
 import 'package:fira/services/auth_services.dart';
+import 'package:fira/services/ticket_services.dart';
 import 'package:fira/widgets/home_page/home_page.dart';
 import 'package:fira/widgets/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,6 +20,7 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
   final _authService = FiraAuthService();
+  final _ticketService = TicketsServices();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,6 +32,9 @@ class MyApp extends StatelessWidget {
           providers: [
             BlocProvider<AuthenticationBloc>(
               create: (BuildContext context) => AuthenticationBloc(_authService),
+            ),
+            BlocProvider<TicketListBloc>(
+              create: (BuildContext context) => TicketListBloc(_ticketService),
             ),
           ],
           child:const MyHomePage(title: 'Flutter Demo Home Page'),
