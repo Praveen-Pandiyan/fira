@@ -34,24 +34,30 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Center(
               child: BlocBuilder<AuthenticationBloc, AuthState>(
                 builder: (context, state) {
-                  return TextButton(
-                      onPressed: () {
-                        context.read<AuthenticationBloc>().add(AuthEvent.login);
-                      },
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.resolveWith(
-                          ((states) {
-                            if (states.contains(MaterialState.pressed)) {
-                              return const Color.fromARGB(255, 26, 117, 192);
-                            }
-                            return Colors.blue;
-                          }),
+                  if (state == AuthState.loggedOut) {
+                    return TextButton(
+                        onPressed: () {
+                          context
+                              .read<AuthenticationBloc>()
+                              .add(AuthEvent.login);
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.resolveWith(
+                            ((states) {
+                              if (states.contains(MaterialState.pressed)) {
+                                return const Color.fromARGB(255, 26, 117, 192);
+                              }
+                              return Colors.blue;
+                            }),
+                          ),
                         ),
-                      ),
-                      child: const Text(
-                        "LOGIN",
-                        style: TextStyle(color: Colors.white),
-                      ));
+                        child: const Text(
+                          "LOGIN",
+                          style: TextStyle(color: Colors.white),
+                        ));
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
                 },
               ),
             ),

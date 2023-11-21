@@ -16,10 +16,9 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   var firebaseAppCheck = FirebaseAppCheck.instance;
-  firebaseAppCheck.activate(
+  await firebaseAppCheck.activate(
     webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
     androidProvider: AndroidProvider.playIntegrity,
-
   );
   runApp(MyApp());
 }
@@ -51,10 +50,20 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
   final String title;
 
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  void initState() {
+    context.read<AuthenticationBloc>().add(AuthEvent.checkLogin);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationBloc, AuthState>(
