@@ -4,11 +4,15 @@ import 'package:google_sign_in/google_sign_in.dart';
 class FiraAuthService {
   FirebaseAuth auth = FirebaseAuth.instance;
 
-
   Future<User?> currentUser() async {
-    await auth.currentUser!.reload();
-    return auth.currentUser;
+    if (auth.currentUser != null) {
+      await auth.currentUser!.reload();
+      return auth.currentUser;
+    } else {
+      return null;
+    }
   }
+
   Stream<User?> retrieveCurrentUserStream() {
     return auth.authStateChanges().map((User? user) {
       if (user != null) {
